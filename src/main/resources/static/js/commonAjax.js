@@ -21,6 +21,7 @@ commonAjax.ajax.prototype.result = function(name, value) {
 
 commonAjax.ajax.prototype.send = function(callback) {
 
+    alert('sendajax');
     callback = callback ? callback : "fnCallback()";
     $.ajax({
         type: this.method

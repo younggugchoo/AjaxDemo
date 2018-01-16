@@ -15,8 +15,8 @@ import java.util.List;
 public class AjaxController {
 
 
-    @RequestMapping("/")
-    public String Index(Model model){
+    @RequestMapping("/ajax")
+    public String ajax(Model model){
 
         model.addAttribute("a", "test");
 

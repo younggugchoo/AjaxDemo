@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
-    <sec:authorize access="isRememberMe()">
+    <span sec:authorize="isRememberMe()">
         <h2># This user is login by "Remember Me Cookies".</h2>
-    </sec:authorize>
+    </span>
 
-    <sec:authorize access="isFullyAuthenticated()">
+    <span sec:authorize="isFullyAuthenticated()">
         <h2># This user is login by username / password.</h2>
-    </sec:authorize>
+    </span>
+
+    <div sec:authorize="!isAuthenticated()">
+        This content is only shown to authenticated users.
+    </div>
 
 </body>
 </html>

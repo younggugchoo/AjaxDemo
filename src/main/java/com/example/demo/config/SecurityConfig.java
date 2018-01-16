@@ -16,16 +16,26 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
+    //@Autowired
+    //DataSource dataSource;
     //...
+
+//    @Autowired
+//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//                .usersByUsernameQuery("select username,password, enabled from users where username=?")
+//                .authoritiesByUsernameQuery("select username, role from user_roles where username=?");
+//    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
             .authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                //.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/**").permitAll()
                 .and()
             .formLogin()
                 .successHandler(savedRequestAwareAuthenticationSuccessHandler())
@@ -42,21 +52,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID","remember-me")
                 .permitAll()
                 .and()
-            .csrf()
-                .and()
-            .rememberMe()
-                .key("myAppKey")
-                .rememberMeParameter("remember-me")
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(120);
+            .csrf().disable();
+//                .and()
+//            .rememberMe()
+//                .key("myAppKey")
+//                .rememberMeParameter("remember-me")
+//                .tokenRepository(persistentTokenRepository())
+//                .tokenValiditySeconds(120);
     }
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-        db.setDataSource(dataSource);
-        return db;
-    }
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+//        db.setDataSource(dataSource);
+//        return db;
+//    }
 
     @Bean
     public SavedRequestAwareAuthenticationSuccessHandler
